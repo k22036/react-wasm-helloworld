@@ -1,10 +1,22 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import init, { greet } from '../wasm/pkg/wasm.js'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [msg, setMsg] = useState('')
+
+  useEffect(() => {
+    init()
+  }, [])
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    const res = greet()
+    console.log(res)
+    setMsg(res)
+  }
 
   return (
     <>
@@ -18,8 +30,8 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+        <button onClick={(e) => handleClick(e)}>
+          {msg ? msg : 'Click me to greet!'}
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
