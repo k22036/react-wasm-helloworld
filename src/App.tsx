@@ -13,9 +13,17 @@ function App() {
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    const res = greet()
-    console.log(res)
-    setMsg(res)
+
+    // const res = greet()
+    const res = greet('test')
+    const value = res.value
+    const name = res.name ?? ''
+    const message = `${value} ${name}`
+    console.log(message)
+
+    if (name) {
+      setMsg(message)
+    }
   }
 
   return (
